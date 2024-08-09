@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/001-create-users-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true
