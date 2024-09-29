@@ -3,7 +3,9 @@ package com.daka.crm.service
 import com.daka.crm.configuration.security.JwtUtil
 import com.daka.crm.dto.LoginRequestDTO
 import com.daka.crm.dto.LoginResponseDTO
+import com.daka.crm.dto.SignUpDTO
 import com.daka.crm.dto.UserDTO
+import com.daka.crm.enums.UserRole
 import com.daka.crm.exception.DAuthenticationException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.apache.commons.lang3.StringUtils
@@ -31,7 +33,7 @@ class UserSecurityService(
 
         val optUser = userService.getByEmail(loginRequest.email)
 
-        if (optUser.isEmpty || passwordEncoder.matches(loginRequest.password, optUser.get().password)) {
+        if (optUser.isEmpty || !passwordEncoder.matches(loginRequest.password, optUser.get().password)) {
             throw DAuthenticationException("Wrong credentials")
         }
 
@@ -40,6 +42,24 @@ class UserSecurityService(
         val refreshToken = jwtUtil.generateRefreshToken(userDto)
 
         return LoginResponseDTO(accessToken, refreshToken)
+    }
+
+    fun signup(request: SignUpDTO) {
+        if (StringUtils.isEmpty(request.email) || StringUtils.isEmpty(request.password)) {
+            throw DAuthenticationException("Email and password are required")
+        }
+
+        val optUser = userService.getByEmail(request.email)
+
+        if (optUser.isPresent) {
+            throw DAuthenticationException("Email already taken")
+        }
+
+        val user = request.toModel();
+        user.password = passwordEncoder.encode(request.password)
+        user.roles = listOf(UserRole.ADMIN, UserRole.USER)
+
+        userService.save(user)
     }
 
     fun refreshToken(refreshToken: String) : String {
