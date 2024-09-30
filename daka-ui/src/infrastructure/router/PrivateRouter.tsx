@@ -4,6 +4,8 @@ import { NavigationRoutes } from "./NavigationRoutes";
 import CompanyDashboard from "../../layouts/CompanyDashboard.layout";
 import { Layout } from "antd";
 import Header from "../../components/header/Header";
+import AdminPanel from "../../layouts/AdminPanel.layout";
+import Profile from "../../layouts/Profile.layout";
 
 const PrivateRouter = () => {
   return (
@@ -15,8 +17,9 @@ const PrivateRouter = () => {
         <Routes>
           <Route
             path={NavigationRoutes.ADMIN_SEARCH}
-            element={<CompanyDashboard />}
+            element={<AdminPanel />}
           />
+          <Route path={NavigationRoutes.PROFILE} element={<Profile />} />
           <Route path={NavigationRoutes.HOME} element={<CompanyDashboard />} />
           {/* 
           <Route

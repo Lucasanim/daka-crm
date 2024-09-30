@@ -7,6 +7,6 @@ export const getUserDetails = (userId: number | string) => {
   return instance.get<User>(`/${userId}`);
 };
 
-export const searchUsersByUsername = (username: string) => {
-  return instance.get<User[]>(`/search-by-username?username=${username}`);
+export const updateProfile = (user: User) => {
+  return instance.put(`/update`, user);
 };

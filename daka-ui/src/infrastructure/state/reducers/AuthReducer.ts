@@ -44,7 +44,7 @@ export const register = (userData: AuthDetails) => {
       const tokenData: Token = response.data;
       const userResponse = await getUserDetails(tokenData.userId);
 
-      return dispatch(requestUserDetails(userResponse.data));
+      return await dispatch(requestUserDetails(userResponse.data));
     } catch (error) {
       return error;
     }
@@ -57,7 +57,7 @@ export const refreshToken = (tokenData: Token | null) => {
       if (!tokenData) return dispatch(logoutSuccess());
       const response = await refreshTokenRequest(tokenData);
 
-      return dispatch(loginSuccess(response.data));
+      return await dispatch(loginSuccess(response.data));
     } catch (error) {
       return error;
     }

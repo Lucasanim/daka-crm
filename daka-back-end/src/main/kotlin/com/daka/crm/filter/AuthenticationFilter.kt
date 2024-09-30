@@ -23,9 +23,14 @@ class AuthenticationFilter(
     ) {
         val token = request.getHeader("Authorization")?.removePrefix("Bearer ")
 
-        if (token == null || !jwtUtil.validateToken(token)) {
+        if (token == null) {
             filterChain.doFilter(request, response)
             return
+        }
+
+        if (!jwtUtil.validateToken(token)) {
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
+            return;
         }
 
         val requestWrapper = HttpRequestWrapper(request);

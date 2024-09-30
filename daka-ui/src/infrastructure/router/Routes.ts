@@ -4,13 +4,13 @@ import { NavigationRoutes } from "./NavigationRoutes";
 
 export const Routes: RouterTree[] = [
   {
-    label: "Admin",
-    route: NavigationRoutes.ADMIN_SEARCH,
+    label: "Home",
+    route: NavigationRoutes.HOME,
     children: [],
     icon: UserOutlined,
   },
   {
-    label: "Admin",
+    label: "Admin panel",
     route: NavigationRoutes.ADMIN_SEARCH,
     children: [],
     icon: UserOutlined,

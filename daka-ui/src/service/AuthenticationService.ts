@@ -12,9 +12,9 @@ export const loginRequest = (credentials: AuthDetails) => {
 };
 
 export const registerRequest = (userData: AuthDetails) => {
-  return instance.post("/register", userData);
+  return instance.post("/signup", userData);
 };
 
 export const refreshTokenRequest = (tokenData: Token) => {
-  return instance.post("/refresh-token", tokenData);
+  return instance.post("/refresh", tokenData);
 };

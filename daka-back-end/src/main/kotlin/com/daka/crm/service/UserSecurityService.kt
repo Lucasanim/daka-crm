@@ -41,7 +41,7 @@ class UserSecurityService(
         val accessToken = jwtUtil.generateAccessToken(userDto)
         val refreshToken = jwtUtil.generateRefreshToken(userDto)
 
-        return LoginResponseDTO(accessToken, refreshToken)
+        return LoginResponseDTO(accessToken, refreshToken, userDto.id)
     }
 
     fun signup(request: SignUpDTO) {

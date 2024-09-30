@@ -66,8 +66,10 @@ const AuthenticationComponent: React.FC = () => {
     };
 
     if (isLogin) {
+      // @ts-expect-error false positive
       await dispatch(login(userData));
     } else {
+      // @ts-expect-error false positive
       await dispatch(register(userData));
     }
     navigate("/app/home");

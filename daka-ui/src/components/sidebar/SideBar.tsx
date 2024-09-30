@@ -12,6 +12,7 @@ import SubMenu from "antd/es/menu/SubMenu";
 import { RouterTree } from "../../model/router/RouterItem";
 import { Routes } from "../../infrastructure/router/Routes";
 import MobileSideBar from "./MobileSideBar";
+import { NavigationRoutes } from "../../infrastructure/router/NavigationRoutes";
 
 const SideBar: React.FC = () => {
   const [siderCollapsed, setSiderCollapsed] = useState(false);
@@ -42,7 +43,9 @@ const SideBar: React.FC = () => {
 
       return (
         <Menu.Item key={item.route} icon={icon && React.createElement(icon)}>
-          <Link onClick={() => navigate(route ?? "")}>{label}</Link>
+          <Link onClick={() => navigate(NavigationRoutes.APP + route)}>
+            {label}
+          </Link>
           {!siderCollapsed && <div className="ant-menu-tree-arrow" />}
         </Menu.Item>
       );

@@ -1,10 +1,13 @@
-import { Avatar, Col, Layout, Row, Typography } from "antd";
+import React from "react";
+import { Layout, Row, Col, Typography } from "antd";
+import UserMenu from "./UserMenu";
 
+const { Header: AntHeader } = Layout;
 const { Title } = Typography;
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
-    <Layout.Header
+    <AntHeader
       style={{
         background: "#fff",
         padding: "0 16px",
@@ -18,10 +21,10 @@ const Header = () => {
           </Title>
         </Col>
         <Col>
-          <Avatar style={{ backgroundColor: "#1890ff" }}>U</Avatar>
+          <UserMenu />
         </Col>
       </Row>
-    </Layout.Header>
+    </AntHeader>
   );
 };
 

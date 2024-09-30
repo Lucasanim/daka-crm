@@ -1,5 +1,10 @@
+import { UserRole } from "./UserRole";
+
 export default interface User {
-  id: string;
+  id: number;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
+  creationDate: string;
+  roles: UserRole[];
 }
