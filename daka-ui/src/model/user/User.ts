@@ -5,6 +5,6 @@ export default interface User {
   firstName: string;
   lastName: string;
   email: string;
-  creationDate: string;
+  creationDate: Date;
   roles: UserRole[];
 }

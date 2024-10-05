@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS user (
     email VARCHAR(255) NOT NULL UNIQUE,
     last_name VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
-    roles VARCHAR(255)
+    roles VARCHAR(255),
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

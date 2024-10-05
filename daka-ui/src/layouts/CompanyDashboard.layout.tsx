@@ -82,6 +82,16 @@ const CompanyDashboard: React.FC = () => {
         background: "#fff",
         minHeight: 280,
       }}
+    ></Content>
+  );
+  return (
+    <Content
+      style={{
+        margin: "24px 16px",
+        padding: 24,
+        background: "#fff",
+        minHeight: 280,
+      }}
     >
       <Row
         gutter={[16, 16]}

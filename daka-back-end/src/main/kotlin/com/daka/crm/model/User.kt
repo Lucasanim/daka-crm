@@ -5,6 +5,7 @@ import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.*
 
 @Entity
 @Table(name = "user")
@@ -18,7 +19,8 @@ data class User(
     @get:JvmName("_password") @get:JvmSynthetic var password: String,
     var email: String,
     var lastName: String,
-    var firstName: String
+    var firstName: String,
+    var creationDate: Date
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {

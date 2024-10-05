@@ -2,6 +2,7 @@ package com.daka.crm.dto
 
 import com.daka.crm.enums.UserRole
 import com.daka.crm.model.User
+import java.util.*
 
 data class SignUpDTO(
     var id: Long,
@@ -20,6 +21,7 @@ data class SignUpDTO(
             lastName = this.lastName,
             firstName = this.firstName,
             password = this.password,
+            creationDate = Date()
         )
     }
 }

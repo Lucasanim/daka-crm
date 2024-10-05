@@ -8,3 +8,12 @@ databaseChangeLog:
             endDelimiter: ";"
             splitStatements: true
             stripComments: true
+  - changeSet:
+      id: 2
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/002-create-verification-token-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true

@@ -44,7 +44,7 @@ class SecurityConfig(
             }
             .authorizeHttpRequests(Customizer { auth ->
                 auth
-                    .requestMatchers(HttpMethod.POST, "/authentication/*")
+                    .requestMatchers(HttpMethod.POST, "/authentication/**")
                     .permitAll()
                     .anyRequest().authenticated()
             })

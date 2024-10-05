@@ -5,13 +5,15 @@ import com.daka.crm.model.User
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
+import java.util.Date
 
 data class UserDTO(
     var id: Long,
     var roles: List<UserRole>,
     var email: String,
     var lastName: String,
-    var firstName: String
+    var firstName: String,
+    var creationDate: Date
 ) {
 
     @JsonIgnore
@@ -26,7 +28,8 @@ data class UserDTO(
                 roles = user.roles,
                 email = user.email,
                 lastName = user.lastName,
-                firstName = user.firstName
+                firstName = user.firstName,
+                creationDate = user.creationDate
             )
         }
 
