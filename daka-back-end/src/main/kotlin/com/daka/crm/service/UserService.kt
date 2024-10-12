@@ -1,8 +1,12 @@
 package com.daka.crm.service
 
+import com.daka.crm.dto.SignUpDTO
 import com.daka.crm.dto.UserDTO
+import com.daka.crm.enums.UserRole
+import com.daka.crm.exception.DAuthenticationException
 import com.daka.crm.model.User
 import com.daka.crm.repository.UserRepository
+import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
@@ -15,6 +19,7 @@ class UserService(
     private val userRepository: UserRepository,
     private val emailService: EmailService,
     private val tokenService: VerificationTokenService,
+    private val stripeService: StripeService,
     private val passwordEncoder: PasswordEncoder,
     private val logger: Logger = LoggerFactory.getLogger(UserService::class.java)
 ) {
@@ -46,11 +51,36 @@ class UserService(
         userRepository.deleteById(id)
     }
 
+    fun signup(request: SignUpDTO): UserDTO {
+        if (StringUtils.isEmpty(request.email) || StringUtils.isEmpty(request.password)) {
+            throw DAuthenticationException("Email and password are required")
+        }
+
+        val optUser = getByEmail(request.email)
+
+        if (optUser.isPresent) {
+            throw DAuthenticationException("Email already taken")
+        }
+
+        val user = request.toModel();
+        user.password = passwordEncoder.encode(request.password)
+        user.roles = listOf(UserRole.USER)
+
+        val userDto = UserDTO.from(user);
+        val customer = stripeService.createCustomer(userDto);
+        user.customerId = customer.id;
+
+        save(user)
+
+        return UserDTO.from(user);
+    }
+
     fun updateUser(userDTO: UserDTO) {
         val user = getById(userDTO.id).orElseThrow()
 
         user.firstName = userDTO.firstName
         user.lastName = userDTO.lastName
+        user.state = userDTO.state
 
         // TODO - Add plan and state
 

@@ -13,7 +13,6 @@ const PrivateRouter = () => {
       <Header />
       <Layout>
         <SideBar />
-        {/* Routes */}
         <Routes>
           <Route
             path={NavigationRoutes.ADMIN_SEARCH}

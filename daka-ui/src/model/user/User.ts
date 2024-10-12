@@ -1,4 +1,5 @@
 import { UserRole } from "./UserRole";
+import { UserState } from "./UserState";
 
 export default interface User {
   id: number;
@@ -7,4 +8,5 @@ export default interface User {
   email: string;
   creationDate: Date;
   roles: UserRole[];
+  state: UserState;
 }

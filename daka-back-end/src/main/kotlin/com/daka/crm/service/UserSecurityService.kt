@@ -5,7 +5,6 @@ import com.daka.crm.dto.LoginRequestDTO
 import com.daka.crm.dto.LoginResponseDTO
 import com.daka.crm.dto.SignUpDTO
 import com.daka.crm.dto.UserDTO
-import com.daka.crm.enums.UserRole
 import com.daka.crm.exception.DAuthenticationException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.apache.commons.lang3.StringUtils
@@ -38,28 +37,20 @@ class UserSecurityService(
         }
 
         val userDto = UserDTO.from(optUser.get())
-        val accessToken = jwtUtil.generateAccessToken(userDto)
-        val refreshToken = jwtUtil.generateRefreshToken(userDto)
-
-        return LoginResponseDTO(accessToken, refreshToken, userDto.id)
+        return getAuthTokenResponse(userDto);
     }
 
-    fun signup(request: SignUpDTO) {
-        if (StringUtils.isEmpty(request.email) || StringUtils.isEmpty(request.password)) {
-            throw DAuthenticationException("Email and password are required")
-        }
+    fun signup(request: SignUpDTO): LoginResponseDTO {
+        val userDto = userService.signup(request)
 
-        val optUser = userService.getByEmail(request.email)
+        return getAuthTokenResponse(userDto);
+    }
 
-        if (optUser.isPresent) {
-            throw DAuthenticationException("Email already taken")
-        }
+    private fun getAuthTokenResponse(userDTO: UserDTO): LoginResponseDTO {
+        val accessToken = jwtUtil.generateAccessToken(userDTO)
+        val refreshToken = jwtUtil.generateRefreshToken(userDTO)
 
-        val user = request.toModel();
-        user.password = passwordEncoder.encode(request.password)
-        user.roles = listOf(UserRole.ADMIN, UserRole.USER)
-
-        userService.save(user)
+        return LoginResponseDTO(accessToken, refreshToken, userDTO.id)
     }
 
     fun refreshToken(refreshToken: String) : String {

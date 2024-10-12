@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS user (
     last_name VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     roles VARCHAR(255),
+    state VARCHAR(64) NOT NULL DEFAULT 'INACTIVE',
+    customer_id VARCHAR(255) NOT NULL DEFAULT '',
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

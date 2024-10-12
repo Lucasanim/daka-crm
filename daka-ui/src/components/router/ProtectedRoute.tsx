@@ -9,7 +9,7 @@ interface Props {
 
 const ProtectedRoute = (props: Props) => {
   const navigate = useNavigate();
-  const isLoggedIn = useAuthentication();
+  const { isLoggedIn, isActive } = useAuthentication();
 
   const checkUserToken = () => {
     if (!isLoggedIn) {
@@ -19,9 +19,16 @@ const ProtectedRoute = (props: Props) => {
     }
   };
 
+  const checkUserState = () => {
+    if (!isActive) {
+      return navigate(NavigationRoutes.PUBLIC + NavigationRoutes.ACTIVATE_SUBS);
+    }
+  };
+
   useEffect(() => {
     checkUserToken();
-  }, [isLoggedIn]);
+    checkUserState();
+  }, [isLoggedIn, isActive]);
 
   return <React.Fragment>{isLoggedIn ? props.children : null}</React.Fragment>;
 };

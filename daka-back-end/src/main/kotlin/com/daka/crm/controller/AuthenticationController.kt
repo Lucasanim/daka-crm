@@ -34,9 +34,9 @@ class AuthenticationController(
     @PostMapping("/signup")
     fun signup(@RequestBody request: SignUpDTO): ResponseEntity<out Any> {
         try {
-            userSecurityService.signup(request)
+            val response = userSecurityService.signup(request)
 
-            return ResponseEntity.status(201).build()
+            return ResponseEntity.status(201).body(response)
         } catch (e: DAuthenticationException) {
             return ResponseEntity.badRequest().body(e.message)
         }

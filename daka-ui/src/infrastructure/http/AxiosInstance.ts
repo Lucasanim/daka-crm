@@ -4,7 +4,7 @@ import { store } from "../../infrastructure/state/store/Store";
 const AxiosInstance = (subPath: string = "") => {
   const instance = axios.create({
     baseURL: import.meta.env.VITE_GATEWAY_BASE_URL + subPath,
-    timeout: 1000,
+    timeout: 10000,
   });
 
   instance.interceptors.request.use(function (config) {

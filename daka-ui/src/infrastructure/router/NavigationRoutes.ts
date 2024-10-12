@@ -7,4 +7,5 @@ export enum NavigationRoutes {
   ADMIN_SEARCH = "/admin/search",
   SEARCH_USER = "/search-user",
   PROFILE = "/profile",
+  ACTIVATE_SUBS = "/activate-subscription",
 }

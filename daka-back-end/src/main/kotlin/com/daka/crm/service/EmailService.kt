@@ -34,7 +34,7 @@ class EmailService(
     }
 
     fun sendPasswordRecovery(email: String, token: String) {
-        sendEmail("lucasvazquezum@gmail.com", "http://localhost:5173/public/password-recovery/" + token)
+        sendEmail(email, "http://localhost:5173/public/password-recovery/" + token)
     }
 
 }

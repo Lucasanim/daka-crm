@@ -1,6 +1,7 @@
 package com.daka.crm.model
 
 import com.daka.crm.enums.UserRole
+import com.daka.crm.enums.UserState
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -16,11 +17,14 @@ data class User(
     var id: Long,
     @Enumerated(value = EnumType.STRING)
     var roles: List<UserRole>,
+    @Enumerated(value = EnumType.STRING)
+    var state: UserState,
     @get:JvmName("_password") @get:JvmSynthetic var password: String,
     var email: String,
     var lastName: String,
     var firstName: String,
-    var creationDate: Date
+    var creationDate: Date,
+    var customerId: String = ""
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {

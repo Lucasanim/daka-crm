@@ -42,6 +42,7 @@ class AuthenticationFilter(
 
         requestWrapper.addHeader("userId", userDTO.id.toString());
         requestWrapper.addHeader("email", userDTO.email);
-        filterChain.doFilter(request, response)
+
+        filterChain.doFilter(requestWrapper, response)
     }
 }

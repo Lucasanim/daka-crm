@@ -21,12 +21,11 @@ import {
 } from "@ant-design/icons";
 import { deleteUser, searchUsers, updateUser } from "../service/AdminService";
 import User from "../model/user/User";
+import { UserState } from "../model/user/UserState";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
-
-const state = ["Enabled", "Disabled"];
 
 const AdminPanel: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -209,7 +208,7 @@ const AdminPanel: React.FC = () => {
               </Form.Item>
               <Form.Item name="state" label="State">
                 <Select>
-                  {state.map((role) => (
+                  {Object.values(UserState).map((role) => (
                     <Option key={role} value={role}>
                       {role}
                     </Option>
@@ -217,8 +216,8 @@ const AdminPanel: React.FC = () => {
                 </Select>
               </Form.Item>
               <Form.Item name="plan" label="Plan">
-                <Select>
-                  {state.map((role, index) => (
+                <Select value={selectedUser?.state}>
+                  {Object.values(UserState).map((role, index) => (
                     <Option key={role} value={role}>
                       Plan {index}
                     </Option>

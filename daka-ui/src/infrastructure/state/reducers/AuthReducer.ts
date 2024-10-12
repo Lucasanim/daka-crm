@@ -1,10 +1,5 @@
 import { Dispatch, createSlice } from "@reduxjs/toolkit";
-import AuthDetails from "../../../model/user/AuthDetail";
-import {
-  loginRequest,
-  refreshTokenRequest,
-  registerRequest,
-} from "../../../service/AuthenticationService";
+import { refreshTokenRequest } from "../../../service/AuthenticationService";
 import Token from "../../../model/user/Token";
 import User from "../../../model/user/User";
 import { getUserDetails } from "../../../service/UserService";
@@ -19,14 +14,11 @@ const initialState: AuthState = {
   user: null,
 };
 
-export const login = (userData: AuthDetails) => {
+export const login = (tokenData: Token) => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await loginRequest(userData);
-      await dispatch(loginSuccess(response.data));
-
-      const tokenData: Token = response.data;
-      const userResponse = await getUserDetails(tokenData.userId);
+      await dispatch(loginSuccess(tokenData));
+      const userResponse = await getUserDetails();
 
       return dispatch(requestUserDetails(userResponse.data));
     } catch (error) {
@@ -35,14 +27,11 @@ export const login = (userData: AuthDetails) => {
   };
 };
 
-export const register = (userData: AuthDetails) => {
+export const register = (tokenData: Token) => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await registerRequest(userData);
-      await dispatch(loginSuccess(response.data));
-
-      const tokenData: Token = response.data;
-      const userResponse = await getUserDetails(tokenData.userId);
+      await dispatch(loginSuccess(tokenData));
+      const userResponse = await getUserDetails();
 
       return await dispatch(requestUserDetails(userResponse.data));
     } catch (error) {
