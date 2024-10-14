@@ -13,8 +13,12 @@ import { RouterTree } from "../../model/router/RouterItem";
 import { Routes } from "../../infrastructure/router/Routes";
 import MobileSideBar from "./MobileSideBar";
 import { NavigationRoutes } from "../../infrastructure/router/NavigationRoutes";
+import { StoreData } from "../../infrastructure/state/store/Store";
+import { useSelector } from "react-redux";
 
 const SideBar: React.FC = () => {
+  const user = useSelector((state: StoreData) => state.auth?.user);
+
   const [siderCollapsed, setSiderCollapsed] = useState(false);
   const [mobileSiderOpen, setMobileSiderOpen] = useState(false);
   const navigate = useNavigate();
@@ -27,7 +31,7 @@ const SideBar: React.FC = () => {
 
   const renderTreeView = (tree: RouterTree[]) => {
     return tree.map((item: RouterTree) => {
-      const { icon, label, route, children } = item;
+      const { icon, label, route, children, role } = item;
 
       if (children.length > 0) {
         return (
@@ -39,6 +43,10 @@ const SideBar: React.FC = () => {
             {renderTreeView(children)}
           </SubMenu>
         );
+      }
+
+      if (role && !user?.roles.includes(role)) {
+        return <></>;
       }
 
       return (
@@ -139,20 +147,6 @@ const SideBar: React.FC = () => {
           </Button>
         }
       >
-        {/* <div
-          style={{
-            width: siderCollapsed ? "80px" : "256px",
-            padding: siderCollapsed ? "0" : "0 16px",
-            display: "flex",
-            justifyContent: siderCollapsed ? "center" : "flex-start",
-            alignItems: "center",
-            height: "64px",
-            //backgroundColor: token.colorBgElevated, #e6f4ff
-            fontSize: "14px",
-          }}
-        >
-          Title
-        </div> */}
         {renderMenu()}
       </Layout.Sider>
     </>

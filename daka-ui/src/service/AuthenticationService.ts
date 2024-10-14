@@ -4,7 +4,7 @@ import Token from "../model/user/Token";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_GATEWAY_BASE_URL + "/authentication",
-  timeout: 1000,
+  timeout: 10000,
   headers: { "Content-Type": "application/json" },
 });
 

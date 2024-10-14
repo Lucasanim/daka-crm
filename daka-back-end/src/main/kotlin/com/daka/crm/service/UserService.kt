@@ -3,6 +3,7 @@ package com.daka.crm.service
 import com.daka.crm.dto.SignUpDTO
 import com.daka.crm.dto.UserDTO
 import com.daka.crm.enums.UserRole
+import com.daka.crm.enums.UserState
 import com.daka.crm.exception.DAuthenticationException
 import com.daka.crm.model.User
 import com.daka.crm.repository.UserRepository
@@ -28,6 +29,10 @@ class UserService(
         return userRepository.findById(id)
     }
 
+    fun getByCustomerId(customerId: String): User {
+        return userRepository.findByCustomerId(customerId)
+    }
+
     fun getPublicDTOById(id: Long): UserDTO {
         val optUser = getById(id)
         if (optUser.isEmpty) throw NotFoundException()
@@ -43,8 +48,27 @@ class UserService(
         return userRepository.findByEmailContaining(email)
     }
 
+    fun searchFromAdmin(email: String): List<UserDTO> {
+        val users = getByEmailLike(email)
+
+        return users.map { user ->
+            val plan = stripeService.getCustomerPlan(user.customerId)
+            UserDTO.from(user, plan)
+        }
+    }
+
     fun save(user: User) {
         userRepository.save(user)
+    }
+
+    fun deleteByIdByAdmin(id: Long) {
+        val user = getById(id).orElseThrow()
+
+        if (UserState.ACTIVE == user.state) {
+            stripeService.deleteCustomerAndSubscription(user.customerId)
+        }
+
+        deleteById(id)
     }
 
     fun deleteById(id: Long) {
@@ -81,8 +105,12 @@ class UserService(
         user.firstName = userDTO.firstName
         user.lastName = userDTO.lastName
         user.state = userDTO.state
+        val currentPlan = stripeService.getCustomerPlan(user.customerId)
+        val newPlan = userDTO.plan
 
-        // TODO - Add plan and state
+        if (newPlan != null && newPlan != currentPlan) {
+            stripeService.changeCustomerPlan(user.customerId, newPlan.priceId)
+        }
 
         save(user)
     }
@@ -123,4 +151,17 @@ class UserService(
 
         save(user)
     }
+
+    fun updateOnPaymentSucceed(customerId: String) {
+        val user = getByCustomerId(customerId)
+        user.state = UserState.ACTIVE
+        save(user)
+    }
+
+    fun updateOnPaymentFail(customerId: String) {
+        val user = getByCustomerId(customerId)
+        user.state = UserState.INACTIVE
+        save(user)
+    }
+
 }

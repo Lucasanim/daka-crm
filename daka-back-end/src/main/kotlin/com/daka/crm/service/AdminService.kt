@@ -9,9 +9,7 @@ class AdminService(
 ) {
 
     fun searchUsers(value: String): List<UserDTO> {
-        val matches = userService.getByEmailLike(value)
-
-        return UserDTO.from(matches)
+        return userService.searchFromAdmin(value)
     }
 
     fun updateUser(userDTO: UserDTO) {
@@ -19,6 +17,6 @@ class AdminService(
     }
 
     fun deleteUser(id: Long) {
-        userService.deleteById(id)
+        userService.deleteByIdByAdmin(id)
     }
 }

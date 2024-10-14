@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { Button, Form, message, Select } from "antd";
 import { createSubscription } from "../../service/BillingService";
-import { BillingPlan } from "../../model/billing/BillingPlan";
+import { BillingPlan, BillingPlanName } from "../../model/billing/BillingPlan";
 import { useDispatch } from "react-redux";
-import { logout } from "../../infrastructure/state/reducers/AuthReducer";
+import {
+  logout,
+  requestUserDetails,
+} from "../../infrastructure/state/reducers/AuthReducer";
+import { getUserDetails } from "../../service/UserService";
 
 const { Option } = Select;
-
-enum PlanMessage {
-  MONTHLY = "Monthly $12.99",
-  YEARLY = "Yearly $9.99 / month",
-}
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -25,7 +24,7 @@ const CheckoutForm = () => {
   const handleSubscriptionCreate = async (paymentMethodId: string) => {
     try {
       await createSubscription(paymentMethodId, selectedPlan!);
-      message.success("You have successfully subscribed to Daka!");
+      message.success("Your payment is being processed! Please wait");
     } catch (e) {
       console.log(e);
       message.error("Something went wrong!");
@@ -58,7 +57,14 @@ const CheckoutForm = () => {
 
     await handleSubscriptionCreate(paymentMethod.id);
 
-    setTimeout(() => {}, 1000);
+    setTimeout(() => {
+      checkUserStatus();
+    }, 1000);
+  };
+
+  const checkUserStatus = async () => {
+    const userResponse = await getUserDetails();
+    await dispatch(requestUserDetails(userResponse.data));
   };
 
   const handleLogout = async () => {
@@ -72,7 +78,7 @@ const CheckoutForm = () => {
         <Select onSelect={(opt) => setSelectedPlan(opt)}>
           {Object.values(BillingPlan).map((plan) => (
             <Option key={plan} value={plan}>
-              {PlanMessage[plan]}
+              {BillingPlanName[plan]}
             </Option>
           ))}
         </Select>

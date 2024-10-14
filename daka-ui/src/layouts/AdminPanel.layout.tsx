@@ -22,6 +22,7 @@ import {
 import { deleteUser, searchUsers, updateUser } from "../service/AdminService";
 import User from "../model/user/User";
 import { UserState } from "../model/user/UserState";
+import { BillingPlan, BillingPlanName } from "../model/billing/BillingPlan";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -216,10 +217,10 @@ const AdminPanel: React.FC = () => {
                 </Select>
               </Form.Item>
               <Form.Item name="plan" label="Plan">
-                <Select value={selectedUser?.state}>
-                  {Object.values(UserState).map((role, index) => (
+                <Select value={selectedUser?.plan}>
+                  {Object.values(BillingPlan).map((role) => (
                     <Option key={role} value={role}>
-                      Plan {index}
+                      {BillingPlanName[role]}
                     </Option>
                   ))}
                 </Select>

@@ -9,7 +9,9 @@ import com.stripe.param.CustomerCreateParams
 import com.stripe.param.CustomerListParams
 import com.stripe.param.CustomerUpdateParams
 import com.stripe.param.PaymentMethodAttachParams
+import com.stripe.param.SubscriptionCancelParams
 import com.stripe.param.SubscriptionCreateParams
+import com.stripe.param.SubscriptionRetrieveParams
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -39,6 +41,11 @@ class StripeClient(@Value("\${stripe.secret.key}") secretKey: String) {
     }
 
     @Throws(StripeException::class)
+    fun getCustomerById(customerId: String): Customer {
+        return Customer.retrieve(customerId)
+    }
+
+    @Throws(StripeException::class)
     fun attachPaymentMethod(customerId: String, paymentMethodId: String): PaymentMethod? {
         val params = PaymentMethodAttachParams.builder()
             .setCustomer(customerId)
@@ -47,8 +54,6 @@ class StripeClient(@Value("\${stripe.secret.key}") secretKey: String) {
         val resource = PaymentMethod.retrieve(paymentMethodId)
         return resource.attach(params)
     }
-
-
 
     @Throws(StripeException::class)
     fun addDefaultPaymentMethod(customer: Customer, paymentMethodId: String): Customer {
@@ -83,6 +88,14 @@ class StripeClient(@Value("\${stripe.secret.key}") secretKey: String) {
         return Subscription.create(params)
     }
 
+    @Throws(StripeException::class)
+    fun removeCustomer(customer: Customer): Customer {
+        return customer.delete()
+    }
 
+    fun getCustomerSubscription(customerId: String): Subscription? {
+        val subscriptionParams = mapOf("customer" to customerId)
+        return Subscription.list(subscriptionParams).data.getOrNull(0)
+    }
 
 }

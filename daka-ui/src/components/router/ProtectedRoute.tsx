@@ -17,6 +17,7 @@ const ProtectedRoute = (props: Props) => {
         NavigationRoutes.PUBLIC + NavigationRoutes.AUTHENTICATION
       );
     }
+    checkUserState();
   };
 
   const checkUserState = () => {
@@ -27,7 +28,6 @@ const ProtectedRoute = (props: Props) => {
 
   useEffect(() => {
     checkUserToken();
-    checkUserState();
   }, [isLoggedIn, isActive]);
 
   return <React.Fragment>{isLoggedIn ? props.children : null}</React.Fragment>;

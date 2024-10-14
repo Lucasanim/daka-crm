@@ -6,4 +6,9 @@ enum class PlanType(
     MONTHLY("price_1Q97ZTF87Y56UerjUm7PimK5"),
     YEARLY("price_1Q97bTF87Y56UerjHAbtxnjY");
 
+    companion object {
+        fun getByPriceId(priceId: String): PlanType? {
+            return entries.find { plan -> plan.priceId == priceId }
+        }
+    }
 }

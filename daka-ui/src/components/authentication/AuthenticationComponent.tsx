@@ -13,6 +13,7 @@ import {
 } from "../../service/AuthenticationService";
 import ReCAPTCHA from "react-google-recaptcha";
 import logo from "../../assets/crm.png";
+import { NavigationRoutes } from "../../infrastructure/router/NavigationRoutes";
 
 const { Title, Text, Link } = Typography;
 
@@ -83,7 +84,7 @@ const AuthenticationComponent: React.FC<Props> = (props: Props) => {
       const response = await loginRequest(userData);
       // @ts-expect-error false positive
       await dispatch(login(response.data));
-      navigate("/app/home");
+      navigate(NavigationRoutes.APP + NavigationRoutes.HOME);
     } catch (e) {
       console.log(e);
       setErrorMsg("Invalid credentials, please try again.");
@@ -98,7 +99,7 @@ const AuthenticationComponent: React.FC<Props> = (props: Props) => {
       const response = await registerRequest(userData);
       // @ts-expect-error false positive
       await dispatch(register(response.data));
-      navigate("/app/home");
+      navigate(NavigationRoutes.PUBLIC + NavigationRoutes.ACTIVATE_SUBS);
     } catch (e) {
       console.log(e);
       setErrorMsg(e.message);

@@ -1,5 +1,6 @@
 package com.daka.crm.dto
 
+import com.daka.crm.enums.PlanType
 import com.daka.crm.enums.UserRole
 import com.daka.crm.enums.UserState
 import com.daka.crm.model.User
@@ -16,7 +17,8 @@ data class UserDTO(
     var lastName: String,
     var firstName: String,
     var creationDate: Date,
-    var customerId: String = ""
+    var customerId: String = "",
+    var plan: PlanType? = null
 ) {
 
     @JsonIgnore
@@ -35,6 +37,20 @@ data class UserDTO(
                 firstName = user.firstName,
                 creationDate = user.creationDate,
                 customerId = user.customerId
+            )
+        }
+
+        fun from(user: User, plan: PlanType?): UserDTO {
+            return UserDTO(
+                id = user.id,
+                roles = user.roles,
+                state = user.state,
+                email = user.email,
+                lastName = user.lastName,
+                firstName = user.firstName,
+                creationDate = user.creationDate,
+                customerId = user.customerId,
+                plan = plan
             )
         }
 

@@ -9,4 +9,5 @@ import java.util.Optional
 interface UserRepository : CrudRepository<User, Long> {
     fun findByEmail(email: String) : Optional<User>
     fun findByEmailContaining(email: String): List<User>
+    fun findByCustomerId(customerId: String): User
 }

@@ -1,3 +1,4 @@
+import { BillingPlan } from "../billing/BillingPlan";
 import { UserRole } from "./UserRole";
 import { UserState } from "./UserState";
 
@@ -9,4 +10,5 @@ export default interface User {
   creationDate: Date;
   roles: UserRole[];
   state: UserState;
+  plan?: BillingPlan;
 }

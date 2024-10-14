@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { NavigationRoutes } from "../infrastructure/router/NavigationRoutes";
 import { Typography } from "antd";
 import logo from "../assets/crm.png";
+import { useEffect } from "react";
 
 const { Title, Text } = Typography;
 
@@ -17,13 +18,21 @@ const stripePromise = loadStripe(
 );
 
 const ActivateSubscription = () => {
-  const userState = useSelector((state: StoreData) => state.auth.user?.state);
+  const user = useSelector((state: StoreData) => state.auth.user);
   const navigate = useNavigate();
 
-  if (userState === UserState.ACTIVE) {
-    navigate(NavigationRoutes.APP + NavigationRoutes.HOME);
-    return <></>;
-  }
+  useEffect(() => {
+    validateUser();
+  }, [user]);
+
+  const validateUser = () => {
+    if (user?.state === UserState.ACTIVE) {
+      navigate(NavigationRoutes.APP + NavigationRoutes.HOME);
+      return <></>;
+    }
+  };
+
+  validateUser();
 
   return (
     <>
