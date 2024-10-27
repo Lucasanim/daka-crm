@@ -17,3 +17,48 @@ databaseChangeLog:
             endDelimiter: ";"
             splitStatements: true
             stripComments: true
+  - changeSet:
+      id: 4
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/003-create-company-category-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 5
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/004-create-company-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 6
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/005-create-customer-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 7
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/006-create-stage-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 8
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/007-create-deal-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true

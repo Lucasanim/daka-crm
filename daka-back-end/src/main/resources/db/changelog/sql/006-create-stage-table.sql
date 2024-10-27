@@ -1,0 +1,8 @@
+CREATE TABLE stage (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    customer_id BIGINT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customer(id)
+);

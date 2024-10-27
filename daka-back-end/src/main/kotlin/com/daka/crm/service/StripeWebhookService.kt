@@ -29,6 +29,7 @@ class StripeWebhookService(
         when (event.type) {
             "invoice.payment_succeeded" -> handleInvoicePaymentSucceeded(event)
             "invoice.payment_failed" -> handleInvoicePaymentFailed(event)
+            "customer.subscription.deleted" -> handleInvoicePaymentFailed(event)
             else -> logger.warn("Unhandled event type: ${event.type}")
         }
     }

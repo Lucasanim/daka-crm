@@ -6,6 +6,7 @@ import { Layout } from "antd";
 import Header from "../../components/header/Header";
 import AdminPanel from "../../layouts/AdminPanel.layout";
 import Profile from "../../layouts/Profile.layout";
+import CustomerPage from "../../layouts/CustomerPage";
 
 const PrivateRouter = () => {
   return (
@@ -20,21 +21,11 @@ const PrivateRouter = () => {
           />
           <Route path={NavigationRoutes.PROFILE} element={<Profile />} />
           <Route path={NavigationRoutes.HOME} element={<CompanyDashboard />} />
-          {/* 
+          <Route path={NavigationRoutes.CUSTOMERS} element={<CustomerPage />} />
           <Route
-            path={NavigationRoutes.DISCUSSION + "/:id"}
-            element={<DiscussionDetailPage />}
+            path={NavigationRoutes.COMPANIES}
+            element={<CompanyDashboard />}
           />
-          <Route path={NavigationRoutes.CHAT} element={<ChatPage />} />
-          <Route path={NavigationRoutes.CHAT + "/:id"} element={<ChatPage />} />
-          <Route
-            path={NavigationRoutes.SEARCH_USER}
-            element={<SearchUsersPage />}
-          />
-          <Route
-            path={NavigationRoutes.PROFILE + "/:id"}
-            element={<ProfilePage />}
-          /> */}
           <Route path="*" element={<Navigate to="home" replace />} />
         </Routes>
       </Layout>
