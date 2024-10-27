@@ -27,6 +27,10 @@ data class DealDTO(
                 customer = CustomerDTO.from(deal.customer)
             )
         }
+
+        fun from(deals: List<Deal>): List<DealDTO> {
+            return deals.map { d -> from(d) }
+        }
     }
 
     fun toEntity(userId: Long, customer: Customer): Deal {

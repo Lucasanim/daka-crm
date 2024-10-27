@@ -11,12 +11,12 @@ data class Deal(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     val userId: Long,
-    val name: String,
-    val amount: BigDecimal,
+    var name: String,
+    var amount: BigDecimal,
     val creationDate: LocalDateTime = LocalDateTime.now(),
     val finishDate: LocalDateTime?,
     @Enumerated(value = EnumType.STRING)
-    val state: DealState = DealState.TO_DO,
+    var state: DealState = DealState.TO_DO,
     @ManyToOne
     @JoinColumn(name = "customer_id")
     val customer: Customer,
