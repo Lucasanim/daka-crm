@@ -6,25 +6,25 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { Button, message } from "antd";
-import { DealState } from "../model/data/DealState";
 import { Content } from "antd/es/layout/layout";
-import { Deal } from "../model/data/Deal";
 import { Customer } from "../model/data/Customer";
 import { getCustomers } from "../service/CustomerService";
+import { Task } from "../model/data/Task";
 import {
-  createDeal,
-  deleteDeal,
-  getDeals,
-  updateDeal,
-} from "../service/DealService";
-import DealModal from "../components/deal/DealModal";
-import DealCard from "../components/deal/DealCard";
+  createTask,
+  deleteTask,
+  getTasks,
+  updateTask,
+} from "../service/TaskService";
+import { TaskState } from "../model/data/TaskState";
+import TaskCard from "../components/task/TaskCard";
+import TaskModal from "../components/task/TaskModal";
 
-const DealsLayout: React.FC = () => {
-  const [deals, setDeals] = useState<Deal[]>([]);
+const TasksLayout: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDeal, setSelectedDeal] = useState<Deal | undefined>();
+  const [selectedTask, setSelectedTask] = useState<Task | undefined>();
 
   const fetchCustomers = async () => {
     try {
@@ -36,10 +36,10 @@ const DealsLayout: React.FC = () => {
     }
   };
 
-  const fetchDeals = async () => {
+  const fetchTasks = async () => {
     try {
-      const response = await getDeals();
-      setDeals(response.data);
+      const response = await getTasks();
+      setTasks(response.data);
     } catch (e) {
       console.log(e);
       message.error("Something went wrong");
@@ -47,7 +47,7 @@ const DealsLayout: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchDeals();
+    fetchTasks();
     fetchCustomers();
   }, []);
 
@@ -55,18 +55,11 @@ const DealsLayout: React.FC = () => {
     const { destination, source, draggableId } = result;
     if (!destination || destination.droppableId === source.droppableId) return;
 
-    const deal = deals.find((deal) => deal.id === parseInt(draggableId));
-    if (!deal) return;
+    const task = tasks.find((t) => t.id === parseInt(draggableId));
+    if (!task) return;
 
-    deal.state = destination.droppableId as DealState;
-    handleEditDeal(deal);
-
-    // const updatedDeals = deals.map((deal) =>
-    //   deal.id === parseInt(draggableId)
-    //     ? { ...deal, state: destination.droppableId as DealState }
-    //     : deal
-    // );
-    // setDeals(updatedDeals);
+    task.state = destination.droppableId as TaskState;
+    handleEditTask(task);
   };
 
   const openModal = () => {
@@ -74,45 +67,45 @@ const DealsLayout: React.FC = () => {
   };
 
   const closeModal = () => {
-    setSelectedDeal(undefined);
+    setSelectedTask(undefined);
     setIsModalOpen(false);
   };
 
-  const handleDealClick = async (deal: Deal) => {
-    setSelectedDeal(deal);
+  const handleTaskClick = async (task: Task) => {
+    setSelectedTask(task);
     openModal();
   };
 
-  const handleDelete = async (dealId: number) => {
-    await deleteDeal(dealId);
-    message.success("Deal deleted successfully!");
+  const handleDelete = async (taskId: number) => {
+    await deleteTask(taskId);
+    message.success("Task deleted successfully!");
     closeModal();
-    fetchDeals();
+    fetchTasks();
   };
 
-  const handleCreate = async (deal: Deal) => {
-    await createDeal(deal);
-    message.success("Deal created successfully!");
+  const handleCreate = async (task: Task) => {
+    await createTask(task);
+    message.success("Task created successfully!");
   };
 
-  const handleSaveDeal = (deal: Deal) => {
+  const handleSaveDeal = (task: Task) => {
     try {
-      if (selectedDeal) {
-        handleEditDeal(deal);
+      if (selectedTask) {
+        handleEditTask(task);
       } else {
-        handleCreate(deal);
+        handleCreate(task);
       }
       closeModal();
-      fetchDeals();
+      fetchTasks();
     } catch (e) {
       console.log(e);
       message.error("Something went wrong");
     }
   };
 
-  const handleEditDeal = async (deal: Deal) => {
-    await updateDeal(deal);
-    message.success("Deal edited successfully!");
+  const handleEditTask = async (task: Task) => {
+    await updateTask(task);
+    message.success("Task edited successfully!");
   };
 
   return (
@@ -128,7 +121,7 @@ const DealsLayout: React.FC = () => {
       </Button>
       <DragDropContext onDragEnd={onDragEnd}>
         <div style={{ display: "flex", gap: "20px" }}>
-          {Object.values(DealState).map((state) => (
+          {Object.values(TaskState).map((state) => (
             <Droppable droppableId={state} key={state}>
               {(provided) => (
                 <div
@@ -144,19 +137,19 @@ const DealsLayout: React.FC = () => {
                   }}
                 >
                   <h3>{state}</h3>
-                  {deals
-                    .filter((deal) => deal.state === state)
-                    .map((deal, index) => (
+                  {tasks
+                    .filter((task) => task.state === state)
+                    .map((task, index) => (
                       <Draggable
-                        key={deal.id}
-                        draggableId={String(deal.id)}
+                        key={task.id}
+                        draggableId={String(task.id)}
                         index={index}
                       >
                         {(provided) => (
-                          <DealCard
-                            deal={deal}
+                          <TaskCard
+                            task={task}
                             provided={provided}
-                            onClick={handleDealClick}
+                            onClick={handleTaskClick}
                           />
                         )}
                       </Draggable>
@@ -168,17 +161,16 @@ const DealsLayout: React.FC = () => {
           ))}
         </div>
       </DragDropContext>
-
-      <DealModal
+      <TaskModal
         visible={isModalOpen}
         onClose={closeModal}
         onSave={handleSaveDeal}
         onDelete={handleDelete}
-        dealData={selectedDeal}
+        taskData={selectedTask}
         customers={customers}
       />
     </Content>
   );
 };
 
-export default DealsLayout;
+export default TasksLayout;

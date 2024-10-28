@@ -24,4 +24,7 @@ data class Customer(
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "deal_id")
     val deals: List<Deal> = emptyList(),
+    @OneToMany()
+    @JoinColumn(name = "task_id")
+    val tasks: List<Task> = emptyList(),
 )

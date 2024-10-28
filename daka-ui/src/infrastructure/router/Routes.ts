@@ -1,4 +1,11 @@
-import { UserOutlined } from "@ant-design/icons";
+import {
+  DollarOutlined,
+  PieChartOutlined,
+  ShopOutlined,
+  SnippetsOutlined,
+  UsergroupAddOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { RouterTree } from "../../model/router/RouterItem";
 import { NavigationRoutes } from "./NavigationRoutes";
 import { UserRole } from "../../model/user/UserRole";
@@ -8,7 +15,7 @@ export const Routes: RouterTree[] = [
     label: "Home",
     route: NavigationRoutes.HOME,
     children: [],
-    icon: UserOutlined,
+    icon: PieChartOutlined,
   },
   {
     label: "Customers",
@@ -20,19 +27,25 @@ export const Routes: RouterTree[] = [
     label: "Companies",
     route: NavigationRoutes.COMPANIES,
     children: [],
-    icon: UserOutlined,
+    icon: ShopOutlined,
   },
   {
     label: "Deals",
     route: NavigationRoutes.DEALS,
     children: [],
-    icon: UserOutlined,
+    icon: DollarOutlined,
+  },
+  {
+    label: "Tasks",
+    route: NavigationRoutes.TASKS,
+    children: [],
+    icon: SnippetsOutlined,
   },
   {
     label: "Admin panel",
     route: NavigationRoutes.ADMIN_SEARCH,
     children: [],
-    icon: UserOutlined,
+    icon: UsergroupAddOutlined,
     role: UserRole.ADMIN,
   },
 ];

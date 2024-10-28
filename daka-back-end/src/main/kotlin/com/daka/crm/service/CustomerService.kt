@@ -2,6 +2,7 @@ package com.daka.crm.service
 
 import com.daka.crm.dto.CustomerDTO
 import com.daka.crm.dto.DealDTO
+import com.daka.crm.dto.TaskDTO
 import com.daka.crm.model.Customer
 import com.daka.crm.repository.CustomerRepository
 import liquibase.util.StringUtil.isEmpty
@@ -15,6 +16,7 @@ class CustomerService(
     private val companyService: CompanyService,
     private val stageService: StageService,
     private val dealService: DealService,
+    private val taskService: TaskService,
 ) {
     fun getAll(userId: Long): List<CustomerDTO> {
         val customers = customerRepository.findAllByUserId(userId)
@@ -63,6 +65,11 @@ class CustomerService(
         dealService.create(userId, customer, dealDTO)
     }
 
+    fun addTaskToCustomer(userId: Long, taskDTO: TaskDTO) {
+        val customer = getById(taskDTO.customer.id).orElseThrow()
+        taskService.create(userId, customer, taskDTO)
+    }
+
     @Transactional
     fun deleteById(id: Long) {
         val customer = getById(id).orElseThrow()
@@ -71,6 +78,7 @@ class CustomerService(
         }
 
         dealService.deleteByCustomerId(customer.id)
+        taskService.deleteByCustomerId(customer.id)
         customerRepository.deleteById(customer.id)
     }
 }

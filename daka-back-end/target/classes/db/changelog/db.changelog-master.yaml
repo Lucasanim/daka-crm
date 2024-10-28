@@ -62,3 +62,12 @@ databaseChangeLog:
             endDelimiter: ";"
             splitStatements: true
             stripComments: true
+  - changeSet:
+      id: 9
+      author: Lucas Vazquez
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/008-create-task-table.sql
+            endDelimiter: ";"
+            splitStatements: true
+            stripComments: true

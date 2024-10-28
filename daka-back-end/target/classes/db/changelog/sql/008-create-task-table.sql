@@ -1,0 +1,10 @@
+CREATE TABLE task (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    state VARCHAR(64) NOT NULL,
+    creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    customer_id BIGINT NOT NULL,
+
+    FOREIGN KEY (customer_id) REFERENCES customer(id)
+);
