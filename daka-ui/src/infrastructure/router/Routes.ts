@@ -23,6 +23,12 @@ export const Routes: RouterTree[] = [
     icon: UserOutlined,
   },
   {
+    label: "Deals",
+    route: NavigationRoutes.DEALS,
+    children: [],
+    icon: UserOutlined,
+  },
+  {
     label: "Admin panel",
     route: NavigationRoutes.ADMIN_SEARCH,
     children: [],

@@ -5,7 +5,8 @@ export interface Deal {
   id: number;
   name: string;
   amount: number;
-  creationDate: string;
+  creationDate: Date;
+  finishDate: Date;
   customer: Customer;
   state: DealState;
 }

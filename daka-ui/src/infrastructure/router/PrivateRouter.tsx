@@ -7,6 +7,7 @@ import Header from "../../components/header/Header";
 import AdminPanel from "../../layouts/AdminPanel.layout";
 import Profile from "../../layouts/Profile.layout";
 import CustomerPage from "../../layouts/CustomerPage";
+import DealsLayout from "../../layouts/DealsLayour";
 
 const PrivateRouter = () => {
   return (
@@ -22,6 +23,7 @@ const PrivateRouter = () => {
           <Route path={NavigationRoutes.PROFILE} element={<Profile />} />
           <Route path={NavigationRoutes.HOME} element={<CompanyDashboard />} />
           <Route path={NavigationRoutes.CUSTOMERS} element={<CustomerPage />} />
+          <Route path={NavigationRoutes.DEALS} element={<DealsLayout />} />
           <Route
             path={NavigationRoutes.COMPANIES}
             element={<CompanyDashboard />}

@@ -6,6 +6,7 @@ export enum NavigationRoutes {
   HOME = "/home",
   COMPANIES = "/companies",
   CUSTOMERS = "/customers",
+  DEALS = "/deals",
   ADMIN_SEARCH = "/admin/search",
   SEARCH_USER = "/search-user",
   PROFILE = "/profile",

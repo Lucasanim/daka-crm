@@ -10,9 +10,9 @@ data class DealDTO(
     val id: Long,
     val name: String,
     val amount: BigDecimal,
-    val creationDate: LocalDateTime,
+    val creationDate: LocalDateTime = LocalDateTime.now(),
     val finishDate: LocalDateTime?,
-    val state: DealState,
+    val state: DealState = DealState.TO_DO,
     val customer: CustomerDTO
 ) {
     companion object {
