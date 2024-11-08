@@ -33,6 +33,10 @@ class DealService(
         return DealDTO.from(deal)
     }
 
+    fun getAllFromYear(userId: Long): List<DealDTO> {
+        return DealDTO.from(dealRepository.getFromCurrentYear(userId))
+    }
+
     fun save(deal: Deal): Deal = dealRepository.save(deal)
 
     fun create(userId: Long, customer: Customer, dealDTO: DealDTO): Deal {

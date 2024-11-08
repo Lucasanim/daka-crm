@@ -23,6 +23,10 @@ class CompanyService(
         return CompanyDTO.from(getById(id).orElseThrow())
     }
 
+    fun getAllFromYear(userId: Long): List<CompanyDTO> {
+        return CompanyDTO.from(companyRepository.getFromCurrentYear(userId))
+    }
+
     fun save(company: Company): Company = companyRepository.save(company)
 
     fun getOrCreate(userId: Long, companyDTO: CompanyDTO): Company {

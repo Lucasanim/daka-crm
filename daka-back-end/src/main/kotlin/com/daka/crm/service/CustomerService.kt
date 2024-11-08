@@ -30,6 +30,10 @@ class CustomerService(
         return CustomerDTO.from(customer)
     }
 
+    fun getAllFromYear(userId: Long): List<CustomerDTO> {
+        return CustomerDTO.from(customerRepository.getFromCurrentYear(userId))
+    }
+
     fun save(customer: Customer): Customer = customerRepository.save(customer)
 
     fun create(userId: Long, customerDTO: CustomerDTO): Customer {

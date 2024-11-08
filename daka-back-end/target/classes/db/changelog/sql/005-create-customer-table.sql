@@ -1,4 +1,4 @@
-CREATE TABLE customer (
+CREATE TABLE IF NOT EXISTS customer (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     first_name VARCHAR(255) NOT NULL,

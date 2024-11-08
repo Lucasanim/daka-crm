@@ -2,7 +2,6 @@ package com.daka.crm.service
 
 import com.daka.crm.dto.TaskDTO
 import com.daka.crm.model.Customer
-import com.daka.crm.model.Deal
 import com.daka.crm.model.Task
 import com.daka.crm.repository.TaskRepository
 import liquibase.util.StringUtil.isEmpty
@@ -24,6 +23,10 @@ class TaskService(
     fun getDTOById(id: Long): TaskDTO {
         val task = getById(id).orElseThrow()
         return TaskDTO.from(task)
+    }
+
+    fun getAllFromYear(userId: Long): List<TaskDTO> {
+        return TaskDTO.from(taskRepository.getFromCurrentYear(userId))
     }
 
     fun getByCustomerId(customerId: Long): List<Task> {

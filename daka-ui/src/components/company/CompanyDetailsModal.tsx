@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, Button, message } from "antd";
+import { Modal, Form, Input, Button } from "antd";
 import { Company } from "../../model/data/Company";
 
 interface CompanyDetailsModalProps {
@@ -22,24 +22,33 @@ const CompanyDetailsModal: React.FC<CompanyDetailsModalProps> = ({
   const [categoryName, setCategoryName] = useState("");
   const [isModified, setIsModified] = useState(false);
 
-  useEffect(() => {
-    setName(company.name);
-    setAddress(company.address);
-    setCategoryName(company.category.name);
-  }, []);
+  const [form] = Form.useForm();
+
+  // const handleSave = () => {
+  //   company.name = name;
+  //   company.address = address;
+  //   company.category.name = categoryName;
+  //   onSave(company);
+  // };
 
   const handleSave = () => {
-    company.name = name;
-    company.address = address;
-    company.category.name = categoryName;
-    onSave(company);
+    form
+      .validateFields()
+      .then((values) => {
+        onSave({
+          ...company,
+          ...values,
+          category: { name: values.categoryName },
+        });
+      })
+      .catch((info) => {
+        console.log("Validation Failed:", info);
+      });
   };
 
   const handleDelete = () => {
     if (company.id) {
       onDelete(company.id);
-      onClose();
-      message.success("Company deleted");
     }
   };
 
@@ -70,28 +79,22 @@ const CompanyDetailsModal: React.FC<CompanyDetailsModalProps> = ({
       ]}
     >
       <Form
+        form={form}
         layout="vertical"
         id="companyEditModal"
         onFieldsChange={handleFieldChange}
+        initialValues={{ ...company, categoryName: company.category.name }}
       >
         <Form.Item
           name="name"
           label="Company name"
           rules={[{ required: true, message: "Please enter company name" }]}
         >
-          <Input
-            placeholder="Please enter company name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <Input placeholder="Please enter company name" />
         </Form.Item>
 
         <Form.Item name="address" label="Address">
-          <Input
-            placeholder="Please enter address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
+          <Input placeholder="Please enter address" />
         </Form.Item>
         {/* 
         <Form.Item
@@ -109,15 +112,11 @@ const CompanyDetailsModal: React.FC<CompanyDetailsModalProps> = ({
         </Form.Item> */}
 
         <Form.Item
-          name="category"
+          name="categoryName"
           label="Category"
           rules={[{ required: true, message: "Please select a category" }]}
         >
-          <Input
-            placeholder="Please write a category"
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
+          <Input placeholder="Please write a category" />
         </Form.Item>
       </Form>
     </Modal>

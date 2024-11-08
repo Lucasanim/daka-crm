@@ -19,7 +19,7 @@ class CompanyCategoryService(private val categoryRepository: CompanyCategoryRepo
     fun getOrCreate(userId: Long, categoryDTO: CompanyCategoryDTO): CompanyCategory {
         if (categoryDTO.id != 0L) return getById(categoryDTO.id).orElseThrow()
 
-        return getByNameAndUser(categoryDTO.name.lowercase(), userId).orElse(save(categoryDTO.toEntity(userId)))
+        return getByNameAndUser(categoryDTO.name.lowercase(), userId).orElseGet { save(categoryDTO.toEntity(userId)) }
     }
 
     fun deleteById(id: Long) = categoryRepository.deleteById(id)

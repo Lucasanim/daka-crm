@@ -1,6 +1,7 @@
 package com.daka.crm.model
 
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 data class Company(
@@ -16,4 +17,5 @@ data class Company(
     @ManyToOne
     @JoinColumn(name = "category_id")
     var category: CompanyCategory,
+    var creationDate: LocalDateTime = LocalDateTime.now(),
 )
