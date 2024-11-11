@@ -133,7 +133,15 @@ const AdminPanel: React.FC = () => {
       <Header style={{ background: "#fff", padding: "0 16px" }}>
         <Title level={3}>User Management</Title>
       </Header>
-      <Content style={{ padding: "24px" }}>
+      <Content
+        style={{
+          padding: "24px",
+          margin: "24px 16px",
+
+          overflowX: "scroll",
+          background: "#fff",
+        }}
+      >
         <Space direction="vertical" style={{ width: "100%" }}>
           <Input
             placeholder="Search users email"

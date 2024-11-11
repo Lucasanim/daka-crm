@@ -114,10 +114,11 @@ const TasksLayout: React.FC = () => {
         margin: "24px 16px",
         padding: 24,
         background: "#fff",
+        overflowX: "scroll",
       }}
     >
       <Button onClick={openModal} type="primary" style={{ marginBottom: 16 }}>
-        Create Deal
+        Create Task
       </Button>
       <DragDropContext onDragEnd={onDragEnd}>
         <div style={{ display: "flex", gap: "20px" }}>
@@ -132,6 +133,7 @@ const TasksLayout: React.FC = () => {
                     padding: "10px",
                     borderRadius: "8px",
                     width: "250px",
+                    minWidth: "250px",
                     minHeight: "400px",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                   }}

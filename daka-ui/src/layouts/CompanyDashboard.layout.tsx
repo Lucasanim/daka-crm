@@ -77,6 +77,7 @@ const CompanyDashboard: React.FC = () => {
         padding: 24,
         background: "#fff",
         minHeight: 280,
+        overflowX: "scroll",
       }}
     >
       <Button

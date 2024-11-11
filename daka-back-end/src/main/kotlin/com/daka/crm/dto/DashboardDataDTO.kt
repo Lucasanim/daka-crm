@@ -7,5 +7,6 @@ class DashboardDataDTO(
     var customersData: List<DashboardValueDTO> = mutableListOf(),
     var dealsRevenueData: List<DashboardExpectedValueDTO> = mutableListOf(),
     var revenueData: List<DashboardExpectedValueDTO> = mutableListOf(),
+    var companiesRevenueData: List<DashboardExpectedValueDTO> = mutableListOf(),
 ) {
 }

@@ -121,6 +121,7 @@ const DealsLayout: React.FC = () => {
         margin: "24px 16px",
         padding: 24,
         background: "#fff",
+        overflowX: "scroll",
       }}
     >
       <Button onClick={openModal} type="primary" style={{ marginBottom: 16 }}>
@@ -139,6 +140,7 @@ const DealsLayout: React.FC = () => {
                     padding: "10px",
                     borderRadius: "8px",
                     width: "250px",
+                    minWidth: "250px",
                     minHeight: "400px",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                   }}

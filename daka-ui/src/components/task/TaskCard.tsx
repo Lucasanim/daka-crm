@@ -25,6 +25,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, provided, onClick }) => {
         borderRadius: "8px",
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
         cursor: "pointer",
+        minWidth: "250 px",
         ...provided.draggableProps.style,
       }}
     >

@@ -16,4 +16,5 @@ export interface DashboardData {
   customersData: DashboardValue[];
   dealsRevenueData: DashboardExpectedValue[];
   revenueData: DashboardExpectedValue[];
+  companiesRevenueData: DashboardExpectedValue[];
 }

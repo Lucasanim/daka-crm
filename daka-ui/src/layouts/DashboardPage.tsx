@@ -1,4 +1,14 @@
-import { Card, Col, Row, Statistic, Button, Typography, message } from "antd";
+import {
+  Card,
+  Col,
+  Row,
+  Statistic,
+  Button,
+  Typography,
+  message,
+  Table,
+  Avatar,
+} from "antd";
 import { useEffect, useState } from "react";
 import {
   LineChart,
@@ -12,8 +22,15 @@ import {
   Area,
 } from "recharts";
 import { PieChart, Pie, Cell, Legend as PieLegend } from "recharts";
-import { DashboardData } from "../model/dashboard/DashboardData";
+import {
+  DashboardData,
+  DashboardExpectedValue,
+} from "../model/dashboard/DashboardData";
 import { getDashboardData } from "../service/DashboardService";
+import { ColumnsType } from "antd/es/table";
+import { useNavigate } from "react-router-dom";
+import { NavigationRoutes } from "../infrastructure/router/NavigationRoutes";
+import { Content } from "antd/es/layout/layout";
 
 const { Text } = Typography;
 
@@ -79,6 +96,8 @@ const revenueData = [
 const Dashboard = () => {
   const [data, setData] = useState<DashboardData>();
 
+  const navigate = useNavigate();
+
   const fetchData = async () => {
     try {
       const response = await getDashboardData();
@@ -89,12 +108,41 @@ const Dashboard = () => {
     }
   };
 
+  const columns: ColumnsType<DashboardExpectedValue> = [
+    {
+      title: "Company",
+      render: (index, record) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Avatar
+            style={{ backgroundColor: taskColors[index], marginRight: 8 }}
+          >
+            {record.month.charAt(0)}
+          </Avatar>
+          <Typography.Text>{record.month}</Typography.Text>
+        </div>
+      ),
+    },
+    {
+      title: "Revenue",
+      render: (_, record) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Typography.Text>{record.expected}</Typography.Text>
+        </div>
+      ),
+    },
+  ];
+
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
+    <Content
+      style={{
+        margin: "24px 16px",
+        overflowX: "scroll",
+      }}
+    >
       <Row gutter={16}>
         <Col span={8}>
           <Card>
@@ -193,7 +241,18 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="Deals" extra={<Button>See sales pipeline</Button>}>
+          <Card
+            title="Deals"
+            extra={
+              <Button
+                onClick={(_) =>
+                  navigate(NavigationRoutes.APP + NavigationRoutes.DEALS)
+                }
+              >
+                See sales pipeline
+              </Button>
+            }
+          >
             <ResponsiveContainer width="100%" height={400}>
               <LineChart data={data?.dealsRevenueData}>
                 {/* dealsData */}
@@ -221,7 +280,18 @@ const Dashboard = () => {
 
       <Row gutter={16} style={{ marginTop: 16 }}>
         <Col span={12}>
-          <Card title="Tasks" extra={<Button>See kanban board</Button>}>
+          <Card
+            title="Tasks"
+            extra={
+              <Button
+                onClick={(e) =>
+                  navigate(NavigationRoutes.APP + NavigationRoutes.TASKS)
+                }
+              >
+                See kanban board
+              </Button>
+            }
+          >
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie
@@ -247,23 +317,29 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="Companies" extra={<Button>See all companies</Button>}>
-            <div
-              style={{
-                height: 400,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text type="secondary">
-                Additional data visualization can go here
-              </Text>
-            </div>
+          <Card
+            title="Top companies"
+            extra={
+              <Button
+                onClick={(_) =>
+                  navigate(NavigationRoutes.APP + NavigationRoutes.COMPANIES)
+                }
+              >
+                See all companies
+              </Button>
+            }
+          >
+            <ResponsiveContainer width="100%" height={400}>
+              <Table
+                columns={columns}
+                dataSource={data?.companiesRevenueData}
+                pagination={false}
+              />
+            </ResponsiveContainer>
           </Card>
         </Col>
       </Row>
-    </div>
+    </Content>
   );
 };
 

@@ -1,5 +1,6 @@
 package com.daka.crm.model
 
+import com.daka.crm.converter.UserRoleListConverter
 import com.daka.crm.enums.UserRole
 import com.daka.crm.enums.UserState
 import jakarta.persistence.*
@@ -15,7 +16,7 @@ data class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     var id: Long,
-    @Enumerated(value = EnumType.STRING)
+    @Convert(converter = UserRoleListConverter::class)
     var roles: List<UserRole>,
     @Enumerated(value = EnumType.STRING)
     var state: UserState,

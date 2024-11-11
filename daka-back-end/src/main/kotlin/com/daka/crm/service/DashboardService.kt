@@ -54,10 +54,13 @@ class DashboardService(
             dashboardData.tasksAmountData = dashboardData.tasksAmountData.plus(DashboardValueDTO(state.name, BigDecimal(stateTasks.size)))
         }
 
+        val companiesData = deals.map { d -> d.customer.company }.distinctBy { c -> c.id }
+        for (company in companiesData) {
+            val companyRevenue = deals.filter { d -> d.customer.company.id == company.id }.sumOf { d -> d.amount }
+            dashboardData.companiesRevenueData = dashboardData.companiesRevenueData.plus(DashboardExpectedValueDTO(company.name, companyRevenue, companyRevenue))
+        }
+
         return dashboardData
     }
-
-
-
 
 }

@@ -87,7 +87,14 @@ const CustomerPage: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Content>
+      <Content
+        style={{
+          margin: "24px 16px",
+          padding: 24,
+          background: "#fff",
+          overflowX: "scroll",
+        }}
+      >
         <Button type="primary" onClick={() => setIsModalVisible(true)}>
           Add New Customer
         </Button>

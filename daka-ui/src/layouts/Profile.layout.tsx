@@ -37,7 +37,7 @@ const Profile: React.FC = () => {
   if (!user) return;
 
   return (
-    <Layout>
+    <Layout style={{ overflowX: "scroll" }}>
       <Card style={{ margin: "0 auto", width: "99%" }}>
         <Title level={2}>User Settings</Title>
         <Form name="user-settings" initialValues={user || {}} layout="vertical">
