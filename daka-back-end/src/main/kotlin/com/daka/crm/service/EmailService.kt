@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class EmailService(
     @Value("\${mailgun.api.key}") private val apiKey: String,
+    @Value("\${daka.front.url}") private val frontUrl: String,
     private val logger: Logger = LoggerFactory.getLogger(EmailService::class.java)
 ) {
     fun sendEmail(email: String, body: String) {
@@ -34,7 +35,7 @@ class EmailService(
     }
 
     fun sendPasswordRecovery(email: String, token: String) {
-        sendEmail(email, "http://localhost:5173/public/password-recovery/" + token)
+        sendEmail(email, "Click here to reset your password: $frontUrl/public/password-recovery/$token")
     }
 
 }
