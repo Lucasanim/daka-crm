@@ -92,6 +92,7 @@ const DealsLayout: React.FC = () => {
 
   const handleCreate = async (deal: Deal) => {
     await createDeal(deal);
+    fetchDeals();
     message.success("Deal created successfully!");
   };
 
@@ -103,7 +104,6 @@ const DealsLayout: React.FC = () => {
         handleCreate(deal);
       }
       closeModal();
-      fetchDeals();
     } catch (e) {
       console.log(e);
       message.error("Something went wrong");
@@ -112,6 +112,7 @@ const DealsLayout: React.FC = () => {
 
   const handleEditDeal = async (deal: Deal) => {
     await updateDeal(deal);
+    fetchDeals();
     message.success("Deal edited successfully!");
   };
 

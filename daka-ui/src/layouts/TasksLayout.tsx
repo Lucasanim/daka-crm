@@ -85,6 +85,7 @@ const TasksLayout: React.FC = () => {
 
   const handleCreate = async (task: Task) => {
     await createTask(task);
+    fetchTasks();
     message.success("Task created successfully!");
   };
 
@@ -96,7 +97,6 @@ const TasksLayout: React.FC = () => {
         handleCreate(task);
       }
       closeModal();
-      fetchTasks();
     } catch (e) {
       console.log(e);
       message.error("Something went wrong");
@@ -105,6 +105,7 @@ const TasksLayout: React.FC = () => {
 
   const handleEditTask = async (task: Task) => {
     await updateTask(task);
+    fetchTasks();
     message.success("Task edited successfully!");
   };
 

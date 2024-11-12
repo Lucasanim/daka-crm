@@ -126,7 +126,9 @@ const Dashboard = () => {
       title: "Revenue",
       render: (_, record) => (
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Typography.Text>{record.expected}</Typography.Text>
+          <Typography.Text style={{ color: "green" }}>
+            ${record.expected}
+          </Typography.Text>
         </div>
       ),
     },
@@ -262,13 +264,13 @@ const Dashboard = () => {
                 <Legend />
                 <Line
                   type="monotone"
-                  dataKey="expected"
+                  dataKey="realized"
                   stroke="#4caf50"
                   name="Won Deals"
                 />
                 <Line
                   type="monotone"
-                  dataKey="realized"
+                  dataKey="expected"
                   stroke="#f44336"
                   name="Lost Deals"
                 />
@@ -296,7 +298,10 @@ const Dashboard = () => {
               <PieChart>
                 <Pie
                   dataKey="value"
-                  data={data?.tasksAmountData}
+                  data={data?.tasksAmountData.map((t) => ({
+                    ...t,
+                    name: t.month.replace("_", " "),
+                  }))}
                   cx="50%"
                   cy="50%"
                   outerRadius={80}

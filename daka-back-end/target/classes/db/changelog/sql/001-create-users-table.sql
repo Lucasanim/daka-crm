@@ -1,3 +1,5 @@
+SET SESSION sql_require_primary_key = 0;
+
 CREATE TABLE IF NOT EXISTS user (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     password VARCHAR(255) NOT NULL,

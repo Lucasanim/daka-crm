@@ -24,9 +24,10 @@ const CustomerPage: React.FC = () => {
   const handleAddCustomer = async (customer: Customer) => {
     try {
       await createCustomer(customer);
-      setCustomers([...customers, customer]);
+      fetchCustomers();
       setIsModalVisible(false);
       setSelectedCustomer(undefined);
+      message.success("Customer created!");
     } catch (e) {
       console.log(e);
       message.error("Creation failed");
@@ -38,6 +39,7 @@ const CustomerPage: React.FC = () => {
       fetchCustomers();
       setIsModalVisible(false);
       setSelectedCustomer(undefined);
+      message.success("Customer updated!");
     } catch (e) {
       console.log(e);
       message.error("Update failed");
@@ -49,6 +51,7 @@ const CustomerPage: React.FC = () => {
       fetchCustomers();
       setIsModalVisible(false);
       setSelectedCustomer(undefined);
+      message.success("Customer deleted!");
     } catch (e) {
       console.log(e);
       message.error("Deletion failed");

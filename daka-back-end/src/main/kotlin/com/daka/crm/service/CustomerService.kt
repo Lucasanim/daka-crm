@@ -79,6 +79,7 @@ class CustomerService(
         val customer = getById(id).orElseThrow()
         if (customer.stage != null) {
             stageService.deleteById(customer.stage!!.id)
+            customer.stage = null
         }
 
         dealService.deleteByCustomerId(customer.id)
