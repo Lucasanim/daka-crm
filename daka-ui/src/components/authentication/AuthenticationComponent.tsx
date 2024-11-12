@@ -102,6 +102,7 @@ const AuthenticationComponent: React.FC<Props> = (props: Props) => {
       navigate(NavigationRoutes.PUBLIC + NavigationRoutes.ACTIVATE_SUBS);
     } catch (e) {
       console.log(e);
+      // @ts-expect-error false positive
       setErrorMsg(e.message);
     }
   };

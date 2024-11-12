@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Layout, message, Modal } from "antd";
+import { Button, Layout, message } from "antd";
 import CustomerForm from "../components/customer/CustomerForm";
 import CustomerTable from "../components/customer/CustomerTable";
 import { Company } from "../model/data/Company";

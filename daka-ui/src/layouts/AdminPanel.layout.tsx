@@ -57,7 +57,7 @@ const AdminPanel: React.FC = () => {
     }
   }, [selectedUser, form]);
 
-  const handleInputChange = (changedValues: any, allValues: any) => {
+  const handleInputChange = (_: any, allValues: any) => {
     setEditedUser(allValues);
     setHasChanges(true);
   };
@@ -114,7 +114,7 @@ const AdminPanel: React.FC = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (text: string, record: User) => (
+      render: (_: string, record: User) => (
         <Button
           icon={<InfoCircleOutlined />}
           onClick={() => {

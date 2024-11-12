@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Form, Input, Button } from "antd";
 import { Company } from "../../model/data/Company";
 
@@ -17,20 +17,9 @@ const CompanyDetailsModal: React.FC<CompanyDetailsModalProps> = ({
   onSave,
   onDelete,
 }) => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [categoryName, setCategoryName] = useState("");
   const [isModified, setIsModified] = useState(false);
 
   const [form] = Form.useForm();
-
-  // const handleSave = () => {
-  //   company.name = name;
-  //   company.address = address;
-  //   company.category.name = categoryName;
-  //   onSave(company);
-  // };
-
   const handleSave = () => {
     form
       .validateFields()
