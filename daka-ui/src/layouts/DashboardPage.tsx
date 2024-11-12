@@ -20,8 +20,10 @@ import {
   Legend,
   AreaChart,
   Area,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
-import { PieChart, Pie, Cell, Legend as PieLegend } from "recharts";
 import {
   DashboardData,
   DashboardExpectedValue,
@@ -32,11 +34,10 @@ import { useNavigate } from "react-router-dom";
 import { NavigationRoutes } from "../infrastructure/router/NavigationRoutes";
 import { Content } from "antd/es/layout/layout";
 
-const taskColors = ["#8884d8", "#82ca9d", "#ffc658", "#ff4d4f"];
+const taskColors = ["#1761da", "#bfe2fe", "#237fff", "#71b5ff"];
 
 const Dashboard = () => {
   const [data, setData] = useState<DashboardData>();
-
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -55,7 +56,10 @@ const Dashboard = () => {
       render: (index, record) => (
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar
-            style={{ backgroundColor: taskColors[index], marginRight: 8 }}
+            style={{
+              backgroundColor: taskColors[index % taskColors.length],
+              marginRight: 8,
+            }}
           >
             {record.month.charAt(0)}
           </Avatar>
@@ -80,14 +84,9 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Content
-      style={{
-        margin: "24px 16px",
-        overflowX: "scroll",
-      }}
-    >
-      <Row gutter={16}>
-        <Col span={8}>
+    <Content style={{ margin: "24px 16px" }}>
+      <Row gutter={[16, 16]}>
+        <Col xs={24} sm={12} lg={8}>
           <Card>
             <Statistic
               title="Number of companies"
@@ -100,19 +99,18 @@ const Dashboard = () => {
             />
             <ResponsiveContainer width="100%" height={50}>
               <AreaChart data={data?.companiesAmountData}>
-                {/* companyTrendData */}
                 <Tooltip />
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="#8884d8"
-                  fill="#8884d8"
+                  stroke="#2a82fe"
+                  fill="#d3e6fe"
                 />
               </AreaChart>
             </ResponsiveContainer>
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} lg={8}>
           <Card>
             <Statistic
               title="Number of contacts"
@@ -120,19 +118,18 @@ const Dashboard = () => {
             />
             <ResponsiveContainer width="100%" height={50}>
               <AreaChart data={data?.customersData}>
-                {/* contactTrendData */}
                 <Tooltip />
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="#82ca9d"
-                  fill="#82ca9d"
+                  stroke="#6ccc3e"
+                  fill="#ddf4d1"
                 />
               </AreaChart>
             </ResponsiveContainer>
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} lg={8}>
           <Card>
             <Statistic
               title="Total deals in pipeline"
@@ -143,13 +140,12 @@ const Dashboard = () => {
             />
             <ResponsiveContainer width="100%" height={50}>
               <AreaChart data={data?.dealsAmountData}>
-                {/*  dealsTrendData*/}
                 <Tooltip />
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="#f44336"
-                  fill="#f44336"
+                  stroke="#fa5822"
+                  fill="#fdded2"
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -157,12 +153,12 @@ const Dashboard = () => {
         </Col>
       </Row>
 
-      <Row gutter={16} style={{ marginTop: 16 }}>
-        <Col span={12}>
+      {/* Charts and Tables */}
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col xs={24} lg={12}>
           <Card title="Total revenue (yearly)">
             <ResponsiveContainer width="100%" height={400}>
               <LineChart data={data?.revenueData}>
-                {/* revenueData */}
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
@@ -176,14 +172,14 @@ const Dashboard = () => {
                 <Line
                   type="monotone"
                   dataKey="realized"
-                  stroke="#82ca9d"
+                  stroke="#6ccc3e"
                   name="Realized"
                 />
               </LineChart>
             </ResponsiveContainer>
           </Card>
         </Col>
-        <Col span={12}>
+        <Col xs={24} lg={12}>
           <Card
             title="Deals"
             extra={
@@ -198,7 +194,6 @@ const Dashboard = () => {
           >
             <ResponsiveContainer width="100%" height={400}>
               <LineChart data={data?.dealsRevenueData}>
-                {/* dealsData */}
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
@@ -206,13 +201,13 @@ const Dashboard = () => {
                 <Line
                   type="monotone"
                   dataKey="realized"
-                  stroke="#4caf50"
+                  stroke="#5bc625"
                   name="Won Deals"
                 />
                 <Line
                   type="monotone"
                   dataKey="expected"
-                  stroke="#f44336"
+                  stroke="#f72e3a"
                   name="Lost Deals"
                 />
               </LineChart>
@@ -221,8 +216,8 @@ const Dashboard = () => {
         </Col>
       </Row>
 
-      <Row gutter={16} style={{ marginTop: 16 }}>
-        <Col span={12}>
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col xs={24} lg={12}>
           <Card
             title="Tasks"
             extra={
@@ -248,12 +243,12 @@ const Dashboard = () => {
                   outerRadius={80}
                   label
                 >
-                  {data?.tasksAmountData.map((entry, index) => (
-                    <Cell key={`cell-${entry}`} fill={taskColors[index]} />
+                  {data?.tasksAmountData.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={taskColors[index]} />
                   ))}
                 </Pie>
                 <Tooltip />
-                <PieLegend
+                <Legend
                   layout="vertical"
                   align="right"
                   verticalAlign="middle"
@@ -262,7 +257,7 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </Card>
         </Col>
-        <Col span={12}>
+        <Col xs={24} lg={12}>
           <Card
             title="Top companies"
             extra={

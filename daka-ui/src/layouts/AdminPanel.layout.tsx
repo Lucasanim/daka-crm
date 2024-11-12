@@ -137,8 +137,6 @@ const AdminPanel: React.FC = () => {
         style={{
           padding: "24px",
           margin: "24px 16px",
-
-          overflowX: "scroll",
           background: "#fff",
         }}
       >
@@ -150,12 +148,15 @@ const AdminPanel: React.FC = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ marginBottom: "20px" }}
           />
-          <Table
-            columns={columns}
-            dataSource={users}
-            rowKey="id"
-            pagination={{ pageSize: 10 }}
-          />
+          <div style={{ overflowX: "auto" }}>
+            <Table
+              columns={columns}
+              dataSource={users}
+              rowKey="id"
+              pagination={{ pageSize: 10 }}
+              style={{ minWidth: "800px" }} // Optional: Set min-width to prevent column compression
+            />
+          </div>
         </Space>
 
         <Modal

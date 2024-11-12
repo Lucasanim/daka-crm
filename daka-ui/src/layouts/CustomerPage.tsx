@@ -90,22 +90,23 @@ const CustomerPage: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Content
-        style={{
-          margin: "24px 16px",
-          padding: 24,
-          background: "#fff",
-          overflowX: "scroll",
-        }}
-      >
-        <Button type="primary" onClick={() => setIsModalVisible(true)}>
+      <Content style={{ margin: "24px 16px", padding: 24, background: "#fff" }}>
+        <Button
+          type="primary"
+          style={{ marginBottom: 16 }}
+          onClick={() => setIsModalVisible(true)}
+        >
           Add New Customer
         </Button>
-        <CustomerTable
-          onSelect={handleSelect}
-          onDelete={handleDelete}
-          customers={customers}
-        />
+
+        <div style={{ overflowX: "auto" }}>
+          <CustomerTable
+            onSelect={handleSelect}
+            onDelete={handleDelete}
+            customers={customers}
+          />
+        </div>
+
         {isModalVisible && (
           <CustomerForm
             customer={selectedCustomer}

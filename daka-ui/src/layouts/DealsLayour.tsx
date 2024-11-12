@@ -60,13 +60,6 @@ const DealsLayout: React.FC = () => {
 
     deal.state = destination.droppableId as DealState;
     handleEditDeal(deal);
-
-    // const updatedDeals = deals.map((deal) =>
-    //   deal.id === parseInt(draggableId)
-    //     ? { ...deal, state: destination.droppableId as DealState }
-    //     : deal
-    // );
-    // setDeals(updatedDeals);
   };
 
   const openModal = () => {
@@ -117,19 +110,19 @@ const DealsLayout: React.FC = () => {
   };
 
   return (
-    <Content
-      style={{
-        margin: "24px 16px",
-        padding: 24,
-        background: "#fff",
-        overflowX: "scroll",
-      }}
-    >
+    <Content style={{ margin: "24px 16px", padding: 24, background: "#fff" }}>
       <Button onClick={openModal} type="primary" style={{ marginBottom: 16 }}>
         Create Deal
       </Button>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display: "flex", gap: "20px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            overflowX: "auto",
+            paddingBottom: 16,
+          }}
+        >
           {Object.values(DealState).map((state) => (
             <Droppable droppableId={state} key={state}>
               {(provided) => (
@@ -144,6 +137,7 @@ const DealsLayout: React.FC = () => {
                     minWidth: "250px",
                     minHeight: "400px",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                    flexShrink: 0,
                   }}
                 >
                   <h3>{state}</h3>
