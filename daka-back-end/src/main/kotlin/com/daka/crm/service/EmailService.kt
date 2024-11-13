@@ -35,7 +35,7 @@ class EmailService(
     }
 
     fun sendPasswordRecovery(email: String, token: String) {
-        sendEmail(email, "Click here to reset your password: $frontUrl/public/password-recovery/$token")
+        sendEmail(email, "Click here to reset your password: $frontUrl/#/public/password-recovery/$token")
     }
 
 }

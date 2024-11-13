@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.daka.crm.DakaCrmApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.13 s -- in com.daka.crm.DakaCrmApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.06 s -- in com.daka.crm.DakaCrmApplicationTests
