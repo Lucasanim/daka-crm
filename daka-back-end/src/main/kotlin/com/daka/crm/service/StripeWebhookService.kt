@@ -20,7 +20,7 @@ class StripeWebhookService(
         try {
             processEvent(Webhook.constructEvent(payload, eventSignature, signature))
         } catch (e: Exception) {
-            logger.error("[STRIPE_WEBHOOK] Error processing event: $payload")
+            logger.error("[STRIPE_WEBHOOK] Error processing event: $payload", e)
             return;
         }
     }
