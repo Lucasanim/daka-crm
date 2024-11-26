@@ -26,6 +26,7 @@ Daka CRM is a customer relationship management system designed to streamline the
 ### Additional Tools
 - **Node.js** for backend services.
 - **Stripe SDK** for payment webhooks processing.
+- **Docker** for container deployment.
 
 ## Installation
 
